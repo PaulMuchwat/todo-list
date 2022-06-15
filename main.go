@@ -48,6 +48,12 @@ func init() {
 	db = sess.DB(dbName)
 }
 
+func homeHandler(w http.ResponseWriter, r *http.Request){
+	err := rnd.Template(w, http.StatusOK, []string{"static/home.tpl"}, nil)
+	checkErr(err)
+}
+
+
 func main() {
 	stopChan := make(chan os.Signal)
 	signal.Notify(stopChan,os.Interrupt)
