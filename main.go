@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"log"
 	"net/http"
 	"os"
@@ -75,6 +76,21 @@ func fetchTodos(w http.ResponseWriter, r *http.Request){
 	rnd.JSON(w, http.StatusOK,renderer.M{
 		"data": todoList,
 	})
+}
+func createTodo(w http.ResponseWriter,r *http.Request){
+	var t todo
+	if err := json.NewDecoder(r.Body).Decode(&t); err!=nil{
+		rnd.JSON(w, http.StatusProcessing, err)
+		return
+	}
+
+	if t.Title == ""{
+		rnd.JSON(w, http.StatusBadRequest, renderer.M{
+			"message":"The title is required"
+		})
+		return
+	}
+	
 }
 
 func main() {
