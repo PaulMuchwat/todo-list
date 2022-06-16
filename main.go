@@ -86,11 +86,18 @@ func createTodo(w http.ResponseWriter,r *http.Request){
 
 	if t.Title == ""{
 		rnd.JSON(w, http.StatusBadRequest, renderer.M{
-			"message":"The title is required"
+			"message":"The title is required",
 		})
 		return
 	}
-	
+
+	tm := todoModel{
+		ID: bson.NewObjectId(),
+		Title: t.Title,
+		Completed: false,
+		CreatedAt: time.Now(),
+	}
+
 }
 
 func main() {
