@@ -170,8 +170,10 @@ func updateTodos(w http.ResponseWriter, r *http.Request) {
 			"error":   err,
 		})
 		return
-
 	}
+	rnd.JSON(w, http.StatusOK, renderer.M{
+		"message": "Todo updated successfully",
+	})
 }
 
 func main() {
